@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springdoc.mapper.BackOfficeMapper">
+
+    <select id="getClassList" resultType="com.example.springdoc.dto.ClassDto">
+        select class_id
+             , speaker
+             , location
+             , max_people
+             , content
+             , to_char(start_time, 'yyyy-mm-dd hh24:mm:ss') as start_time
+             , to_char(end_time, 'yyyy-mm-dd hh24:mm:ss')   as end_time
+        from class_tb
+        order by start_time asc
+    </select>
+
+    <select id="chkRegClass" parameterType="com.example.springdoc.dto.ClassDto" resultType="int">
+        select count(class_id)
+        from class_tb
+        WHERE location = #{location}
+            and (start_time BETWEEN #{startTime}::timestamp AND #{endTime}::timestamp)
+           or (end_time BETWEEN #{startTime}::timestamp AND #{endTime}::timestamp)
+    </select>
+
+    <insert id="regClass" parameterType="com.example.springdoc.dto.ClassDto">
+        <selectKey keyProperty="classId" resultType="String" order="BEFORE">
+            select CAST(max(class_id) as integer) + 1 from class_tb
+        </selectKey>
+
+        insert into class_tb ( class_id
+                             , speaker
+                             , location
+                             , max_people
+                             , content
+                             , start_time
+                             , end_time)
+        values ( #{classId}
+               , #{speaker}
+               , #{location}
+               , #{maxPeople}
+               , #{content}
+               , #{startTime}::timestamp
+               , #{endTime}::timestamp)
+    </insert>
+
+    <select id="getSubscribeList" parameterType="String" resultType="com.example.springdoc.dto.EmployerDto">
+        select e.employer_id
+             , e.name
+             , CASE WHEN ce.status = '0' THEN '취소' ELSE '신청' END as status
+        from employer_tb e
+                 inner join class_employer_tb ce
+                            on e.employer_id = ce.employer_id
+                 inner join class_tb c
+                            on ce.class_id = c.class_id
+                                and c.class_id = #{classId}
+    </select>
+</mapper>

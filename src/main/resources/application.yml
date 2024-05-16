@@ -1,0 +1,22 @@
+server:
+  port: '8080'
+
+spring:
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    username: postgres
+    jdbc-url: jdbc:log4jdbc:postgresql://localhost:5432/postgres?charSet=UTF-8
+    password: postgres
+  application:
+    name: kidari
+
+springdoc:
+  swagger-ui:
+    groups-order: asc
+    tags-sorter: alpha
+    operations-sorter: method
+    display-request-duration: true
+  cache:
+    disabled: true
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
