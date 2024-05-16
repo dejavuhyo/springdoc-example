@@ -1,4 +1,4 @@
-# Spring Boot Springdocs Swagger UI Example
+# Spring Boot API Springdoc Swagger UI Example
 
 ## 1. 개발언어
 * OpenJDK 17
