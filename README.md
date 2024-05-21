@@ -20,6 +20,7 @@
 [직원 테이블] - [직원/강연 테이블] - [강연 테이블]
 
 * 강연 테이블
+
 ```sql
 create table class_tb
 (
@@ -45,6 +46,7 @@ comment on column class_tb.end_time is '강연종료시간';
 ```
 
 * 직원 테이블
+
 ```sql
 create table employer_tb
 (
@@ -60,6 +62,7 @@ comment on column employer_tb.name is '사원이름';
 ```
 
 * 직원/강연 테이블
+
 ```sql
 create table class_employer_tb
 (
@@ -83,23 +86,19 @@ comment on column class_employer_tb.subscribe_date is '강연신청일자';
 
 ## 5. 이슈사항
 
-### 1) BackOffice - 강연등록 
-* 기존에 등록된 강연과 같은 시간 및 장소 여부를 확인하여 강연 등록이 가능하도록 하였음
+### 1) BackOffice
+* 강연등록시 기존에 등록된 강연과 같은 시간 및 장소 여부를 확인하여 강연 등록이 가능하도록 하였음
 * 강연등록시 지나간 날짜 등록은 화면에서 처리해야됨
 
-### 2) Front - 강연신청
-* 강연신청 최대 인원을 확인하여 강연 신청이 가능하도록 하였음
-* 강연신청시 중복 신청을 확인하여 강연 신청이 가능하도록 하였음
+### 2) Front
+* 강연신청시 최대 인원 및 중복 신청을 확인하여 강연 신청이 가능하도록 하였음
 
 ## 6. 기타 설명
 
-### 1) 단위 테스트
-* test 패키지 확인
-
-### 2) Backend API Docs 경로
+### 1) API Docs
 * [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
-### 3) API 테스트
+### 2) API 테스트
 
 * BackOffice
   - 강연목록: GET - http://localhost:8080/backoffice/classes
@@ -138,6 +137,7 @@ comment on column class_employer_tb.subscribe_date is '강연신청일자';
 ### 4) 샘플 데이터
 
 * 강연 테이블
+
 ```sql
 INSERT INTO class_tb (speaker, location, max_people, content, class_id, start_time, end_time) VALUES ('김발표', '강연장2', '70', '강연내용2', '2', '2024-05-10 10:00:00.000000', '2024-05-10 10:30:00.000000');
 INSERT INTO class_tb (speaker, location, max_people, content, class_id, start_time, end_time) VALUES ('박발표', '강연장3', '30', '강연내용3', '3', '2024-05-20 11:00:00.000000', '2024-05-20 13:00:00.000000');
@@ -149,6 +149,7 @@ INSERT INTO class_tb (speaker, location, max_people, content, class_id, start_ti
 ```
 
 * 직원 테이블
+
 ```sql
 INSERT INTO employer_tb (employer_id, name) VALUES ('10008', '이병헌');
 INSERT INTO employer_tb (employer_id, name) VALUES ('10001', '홍길동');
@@ -162,6 +163,7 @@ INSERT INTO employer_tb (employer_id, name) VALUES ('10003', '김영수');
 ```
 
 * 직원/강연 테이블
+
 ```sql
 INSERT INTO class_employer_tb (status, class_id, employer_id, subscribe_date, cancel_date) VALUES ('1', '1', '10001', '2024-05-09 14:39:19.599845', null);
 INSERT INTO class_employer_tb (status, class_id, employer_id, subscribe_date, cancel_date) VALUES ('1', '1', '10002', '2024-05-09 14:53:02.471614', null);
